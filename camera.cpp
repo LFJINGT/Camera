@@ -20,11 +20,16 @@
 #include <QMediaDevices>
 #include <QMediaFormat>
 
+#include <QDebug>
+
+#define DEV true
+
 Camera::Camera()
         : ui(new Ui::Camera)
 {
     ui->setupUi(this);
 
+    //sample rate:
     m_audioInput.reset(new QAudioInput);
     m_captureSession.setAudioInput(m_audioInput.get());
 
@@ -42,16 +47,30 @@ Camera::Camera()
     connect(ui->metaDataButton, &QPushButton::clicked, this, &Camera::showMetaDataDialog);
 
     setCamera(QMediaDevices::defaultVideoInput());
+
+#if DEV
+    const QList<QCameraDevice> cameras = QMediaDevices::videoInputs();
+    for (const QCameraDevice &cameraDevice : cameras) {
+        qDebug() << cameraDevice.id();
+        qDebug() << cameraDevice.description();
+    }
+
+#endif
+
 }
 
 void Camera::setCamera(const QCameraDevice &cameraDevice)
 {
+    // 初始化摄像头
     m_camera.reset(new QCamera(cameraDevice));
+
+    // 初始化捕获会话
     m_captureSession.setCamera(m_camera.data());
 
     connect(m_camera.data(), &QCamera::activeChanged, this, &Camera::updateCameraActive);
     connect(m_camera.data(), &QCamera::errorOccurred, this, &Camera::displayCameraError);
 
+    // 设置声音输入
     if (!m_mediaRecorder) {
         m_mediaRecorder.reset(new QMediaRecorder);
         m_captureSession.setRecorder(m_mediaRecorder.data());
@@ -66,6 +85,7 @@ void Camera::setCamera(const QCameraDevice &cameraDevice)
 
     connect(ui->exposureCompensation, &QAbstractSlider::valueChanged, this, &Camera::setExposureCompensation);
 
+    // 设置摄像头会话至显示窗口
     m_captureSession.setVideoOutput(ui->viewfinder);
 
     updateCameraActive(m_camera->isActive());
@@ -218,11 +238,17 @@ void Camera::displayCaptureError(int id, const QImageCapture::Error error, const
 void Camera::startCamera()
 {
     m_camera->start();
+    m_camera_2->start();
+    m_camera_3->start();
+    m_camera_4->start();
 }
 
 void Camera::stopCamera()
 {
     m_camera->stop();
+    m_camera_2->stop();
+    m_camera_3->stop();
+    m_camera_4->stop();
 }
 
 void Camera::updateCaptureMode()
@@ -342,6 +368,7 @@ void Camera::updateCameras()
         ui->menuDevices->addAction(videoDeviceAction);
     }
 }
+
 
 void Camera::showMetaDataDialog()
 {

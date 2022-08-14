@@ -83,13 +83,21 @@ private:
 
     QMediaDevices m_devices;
     QMediaCaptureSession m_captureSession;
+    QMediaCaptureSession m_captureSession_2;
+    QMediaCaptureSession m_captureSession_3;
+    QMediaCaptureSession m_captureSession_4;
+    // 相机
     QScopedPointer<QCamera> m_camera;
-    QScopedPointer<QCamera> m_camera_1;
     QScopedPointer<QCamera> m_camera_2;
     QScopedPointer<QCamera> m_camera_3;
+    QScopedPointer<QCamera> m_camera_4;
     QScopedPointer<QAudioInput> m_audioInput;
     QImageCapture *m_imageCapture;
+    // 媒体声音
     QScopedPointer<QMediaRecorder> m_mediaRecorder;
+    QScopedPointer<QMediaRecorder> m_mediaRecorder_2;
+    QScopedPointer<QMediaRecorder> m_mediaRecorder_3;
+    QScopedPointer<QMediaRecorder> m_mediaRecorder_4;
 
 
     bool m_isCapturingImage = false; // 是否正在捕获图像
