@@ -229,8 +229,26 @@
      <string>设备</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuDevices_2">
+    <property name="title">
+     <string>设备2</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuDevices_3">
+    <property name="title">
+     <string>设备3</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuDevices_4">
+    <property name="title">
+     <string>设备4</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuDevices"/>
+   <addaction name="menuDevices_2"/>
+   <addaction name="menuDevices_3"/>
+   <addaction name="menuDevices_4"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionExit">
